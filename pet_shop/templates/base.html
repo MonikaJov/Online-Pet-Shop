@@ -1,0 +1,238 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <title>Pet Shop</title>
+    <script src="{% static 'script.js' %}" type="text/javascript"></script>
+
+    <style>
+
+        .selected{
+            background-color: lightblue;
+        }
+        .card img {
+            max-width: 200px;
+            height: auto;
+            display: block;
+            width: 50%;
+            margin: auto;
+        }
+
+        body {
+            width: 1519px;
+            background-color: gainsboro;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+        .card{
+            background-color: gainsboro;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .product-card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: auto;
+        }
+
+        .product-card h4 {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .product-card p {
+            margin-top: 5px;
+            font-size: 14px;
+            color: #777777;
+        }
+
+        .quantity-input {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .quantity-input label {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .quantity-input input {
+            width: 60px;
+            padding: 5px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 16px;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .product-quantity {
+            margin-bottom: 10px;
+        }
+
+        .product-actions {
+            text-align: right;
+        }
+
+        {#.btn-add-to-cart {#}
+        {#    margin-top: 20px;#}
+        {#    width: 100%;#}
+        {##}
+    </style>
+</head>
+<body >
+<!--Navigation bar-->
+<nav class="navbar navbar-expand-lg navbar-dark " style="background-color: grey; height: 65px;">
+    <a class="navbar-brand" href="{% url 'home' %}"><img src="{{ MEDIA_URL }}logo.jpg" alt="Logo" style="width: 120px; height: auto;"></a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav " style="width: 100%; ">
+            <li class="nav-item">
+                <a class="nav-link " href="{% url 'home' %}">Home</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Products
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{% url 'category_view' category='Cats' %}">Cats</a>
+                    <a class="dropdown-item" href="{% url 'category_view' category='Dogs' %}">Dogs</a>
+                    <a class="dropdown-item" href="{% url 'category_view' category='Fish' %}">Fish</a>
+                    <a class="dropdown-item" href="{% url 'category_view' category='Birds' %}">Birds</a>
+                    <a class="dropdown-item" href="{% url 'category_view' category='Reptiles' %}">Reptiles</a>
+                    <a class="dropdown-item" href="{% url 'category_view' category='Small Pets' %}">Small Pets</a>
+                    <a class="dropdown-item" href="{% url 'category_view' category='Farm Animals' %}">Farm Animals</a>
+                    {% if user.is_authenticated and user.username == 'admin' %}
+                    <a class="dropdown-item" href="{% url 'add_category' %}">+Add category</a>
+                    {% endif %}
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Promotions</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Contacts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">FAQ</a>
+            </li>
+
+            <li class="nav-item">
+                {% if user.is_authenticated and user.username == 'admin' %}
+                <a class="nav-link btn btn-danger btn-sm"   href="{% url 'create' %}">Add Product</a>
+                {% endif %}
+            </li>
+            <li class="nav-item">
+                {% if user.is_authenticated and user.username == 'admin' %}
+                <a class="nav-link"  href="{% url 'view_orders' %}">View Orders</a>
+                {% endif %}
+            </li>
+            <li class="nav-item ml-auto" style="margin-right: 10px;">
+                <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search_results' %}">
+                    <div class="input-group">
+                        <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="query" required>
+                        <div class="input-group-append">
+                            <button class="btn btn-dark btn-sm" type="submit">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </li>
+            <li class="nav-item">
+                {% if user.is_authenticated %}
+                <a class="nav-link">Wellcome {{ user.username }}!</a>
+                {% endif %}
+            </li>
+            <li class="nav-item ">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'logout_form' %}" style="color: white;  background-color: #343a40;" class="nav-link rounded btn-sm" id="logout-button">Log Out</a>
+                    {% else %}
+                    <a href="{% url 'login_form' %}" style="color: white;  background-color: #343a40; " class="nav-link btn btn-dark btn-sm" id="login-button">Log In</a>
+                {% endif %}
+
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'cart' %}">
+                    <img src="{{ MEDIA_URL }}cart.jpg" alt="Cart" style="width: 25px; height: auto;">
+                </a>
+            </li>
+            {% if cart_products > 0 %}
+            <li class="nav-item">
+                <span style="font-size: 15px; color: white; background-color: red">{{ cart_products }}</span>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+<!--End navigation bar-->
+    {% block content %}
+
+    {% endblock %}
+<!--        Footer-->
+<br/><br/><hr/><footer  style="background-color: grey; width: 100%; margin-top: auto; padding: 10px; color: white">
+    <div class="row">
+        <div class="col text-center">
+            <h4>Contact Information</h4>
+            <p>Email: example@example.com</p>
+            <p>Phone: 123-456-7890</p>
+            <p>Address: 123 Street, City, Country</p>
+        </div>
+        <div class="col text-center">
+            <h4>Student</h4>
+            <p> Index: 203028</p>
+            <p> Monika Jovevska</p>
+        </div>
+        <div class="col text-center">
+            <h4>Follow Us</h4>
+            <a href="#"><img style="width: 30px; padding: 5px;" src="{{ MEDIA_URL }}fb.png"></a>
+            <a href="#"><img style="width: 30px; padding: 5px;" src="{{ MEDIA_URL }}twitter.png"></a>
+            <a href="#"><img style="width: 30px; padding: 5px;" src="{{ MEDIA_URL }}Instagram.png"></a>
+        </div>
+    </div>
+</footer>
+
+</body>
+
+</html>

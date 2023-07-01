@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="content" style="background-image: url('{{ MEDIA_URL }}catcover.jpg'); height: 470px;background-size: cover;background-position: center">
+    <div style=" color: white; padding-top: 60px; margin-left: 90px;">
+        <h1 class="display-4">CAT SHOP</h1>
+            <p>Welcome to our online cat shop, where you'll find a
+            <br/> purr-fect selection of cat-related goodies!</p>
+    </div>
+</div>
+{#        <h4 style="margin-left: 250px; margin-right: 250px; margin-top: 20px" >Select Categories</h4>#}
+        <div class="rounded" id="content-container2" style="padding: 25px; margin-left: 250px; margin-right: 250px; margin-top: 20px;">
+            <div class="row justify-content-between">
+                <div class="col" id="food" onclick="Click('food')">
+                    <a href="#">
+                        <img src="{{ MEDIA_URL }}cat_food.jpg" alt="Image 1" class="img-fluid">
+                        <h4 class="text-center">Food</h4>
+                    </a>
+                </div>
+                <div class="col" id="flea&worming" onclick="Click('flea&worming')">
+                    <a href="#">
+                        <img src="{{ MEDIA_URL }}Picsart_23-06-26_05-18-57-053.png" alt="Image 2" class="img-fluid" >
+                        <h4 class="text-center">Flea and Worming</h4>
+                    </a>
+                </div>
+                <div class="col" id="toy" onclick="Click('toy')">
+                    <a href="#">
+                        <img src="{{ MEDIA_URL }}Picsart_23-06-26_05-16-32-408.png" alt="Image 3" class="img-fluid" >
+                        <h4 class="text-center">Toys</h4>
+                    </a>
+                </div>
+                <div class="col" id="grooming" onclick="Click('grooming')">
+                    <a href="#">
+                        <img src="{{ MEDIA_URL }}Picsart_23-06-26_05-17-27-950.png" alt="Image 4" class="img-fluid" >
+                        <h4 class="text-center">Grooming</h4>
+                    </a>
+                </div>
+                <div class="col" id="lead" onclick="Click('lead')">
+                    <a href="#">
+                        <img src="{{ MEDIA_URL }}Picsart_23-06-26_05-17-50-651.png" alt="Image 5" class="img-fluid" >
+                        <h4 class="text-center">Collars and Leads</h4>
+                    </a>
+                </div>
+                <div class="col" id="bed" onclick="Click('bed')">
+                    <a href="#">
+                        <img src="{{ MEDIA_URL }}Picsart_23-06-26_05-18-23-001.png" alt="Image 6" class="img-fluid" >
+                        <h4 class="text-center">Beds</h4>
+                    </a>
+                </div>
+                <div class="col" id="clothes" onclick="Click('clothes')">
+                    <a href="#">
+                        <img src="{{ MEDIA_URL }}Picsart_23-06-26_05-19-21-967.png" alt="Image 7" class="img-fluid" >
+                        <h4 class="text-center">Clothes</h4>
+                    </a>
+                </div>
+
+            </div>
+            <div class="row justify-content-between" style="margin-left: 250px; margin-right: 250px;">
+                <div class="col" id="kitten" onclick="Click('puppy')">
+                    <a href="#">
+                        <img src="{{ MEDIA_URL }}Picsart_23-06-26_05-20-29-364.png" alt="Image 1" class="img-fluid" >
+                        <h4 class="text-center">Kitten</h4>
+                    </a>
+                </div>
+                <div class="col" id="adult" onclick="Click('adult')">
+                    <a href="#">
+                        <img src="{{ MEDIA_URL }}Picsart_23-06-26_05-20-59-809.png" alt="Image 2" class="img-fluid" >
+                        <h4 class="text-center">Adult</h4>
+                    </a>
+                </div>
+                <div class="col" id="senior" onclick="Click('senior')">
+                    <a href="#">
+                        <img src="{{ MEDIA_URL }}Picsart_23-06-26_05-21-26-080.png" alt="Image 3" class="img-fluid" >
+                        <h4 class="text-center">Senior</h4>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+            <div class="row justify-content-between" style="margin-left: 150px; margin-right: 150px; margin-top: 40px">
+
+            <div id="filter-container" class="col-md-3">
+                <form method="post" action="{% url 'category_view' category="Cats" %}" enctype="multipart/form-data" style=" margin-left: 30px;">
+                    {% csrf_token %}
+                    <div >
+                        {{ form.price.label_tag }}
+                        <div class="input-group">
+                            <span class="input-group-text">$1</span>
+                            {{ form.price }}
+                            <span class="input-group-text">$500</span>
+                        </div>
+                    </div>
+                    <div class="mb-5">
+                        {{ form.brand.label_tag }}
+                        <div>
+                            {% for radio in form.brand %}
+                            {{ radio }}<br/>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Apply Filters</button>
+                </form>
+            </div>
+            <div class="col-md-9">
+                <!-- Product browsing -->
+                <div id="product-browsing-container">
+                    <div class="row justify-content-center" style="display: flex;">
+                    {% for product in products %}
+                        <div class="col-4 my-auto text-center" style="flex: 1;">
+                            <div class="card {{ product.keywords }}" style="width: 18rem;">
+                                {% if product.promotion is None%}
+                                    {% if user.is_authenticated and user.username == 'admin'%}
+                                    <p>
+                                        <a type="button" class="btn btn-link btn-sm" data-toggle="collapse" href="#collapseExample{{ product.id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                            Add promotion
+                                        </a>
+                                    </p>
+                                    <div class="collapse" id="collapseExample{{ product.id }}">
+                                        <div class="card card-body">
+                                            <p>Please click on the promotion you want to apply or create a new one:</p>
+                                            {% for promotion in promotions %}
+                                            <form method="post" enctype="multipart/form-data" action="{% url 'add_promotion' product_id=product.id %}">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-link btn-sm" >{{ promotion }}</button>
+                                                <input type="hidden" name="product_id" value="{{ product.id }}">
+                                                <input type="hidden" name="amount" value="{{ promotion.amount }}">
+                                                <input type="hidden" name="duration" value="{{ promotion.duration }}">
+                                            </form>
+                                            {% endfor %}
+                                            <hr/>
+                                            <form method="post" enctype="multipart/form-data" action="{% url 'add_promotion' product_id=product.id %}">
+                                                {% csrf_token %}
+                                                <p>Amount:<input type="text" name="amount" ></p>
+                                                <p>Duration:<input type="number" name="duration" ></p>
+                                                <button type="submit" class="btn btn-outline-primary btn-sm">Create and apply</button>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                {% else %}
+                                <h6 style="color: red"><b>{{ product.promotion }}</b></h6>
+{#                                    #}
+                                    <p>  <a class="btn btn-link btn-sm"  data-toggle="collapse" href="#collapseExample2{{ product.id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        Remove promotion
+                                    </a></p>
+                                    <div class="collapse" id="collapseExample2{{ product.id }}">
+                                    <form method="post" enctype="multipart/form-data" action="{% url 'remove_promotion' product_id=product.id %}">
+                                        {% csrf_token %}
+                                        <div class="card card-body">
+                                            <input type="hidden" name="promotion_id" value="{{ product.promotion.id }}">
+                                            <button name="action" value="this" style="margin: 3px;" type="submit" class="btn btn-primary btn-sm">Remove for this product</button>
+                                        </div>
+                                    </form>
+                                    <form method="post" enctype="multipart/form-data" action="{% url 'remove_promotion' product_id=product.id %}">
+                                        {% csrf_token %}
+                                        <div class="card card-body">
+                                            <input type="hidden" name="promotion_id" value="{{ product.promotion.id }}">
+                                            <button name="action" value="all" style="margin: 3px;" type="submit" class="btn btn-danger btn-sm">Remove for all</button>
+                                        </div>
+                                    </form>
+                                    </div>
+{#                                    #}
+                                {% endif %}
+                                <img class="card-img-top" src="{{ MEDIA_URL }}{{ product.photo }}" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ product.name }}</h5>
+                                    <p>${{ product.price }}</p>
+                                    <a href="{% url 'view_product' product.id %}" type="button" class="btn btn-info">View</a>
+                                    <a class="btn btn-success btn-add-to-cart"  href="{% url 'add_to_cart' product.id %}">Add to Cart</a>
+                                </div>
+                                {% if user.is_authenticated and user.username == 'admin' %}
+                                <div class="card-footer">
+                                    <a class="btn btn-danger btn-sm" href="{% url 'delete' product.id %}">Delete</a>
+                                    <a class="btn btn-link btn-sm" href="{% url 'edit' product.id %}">Edit post</a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% empty %}
+                       <p style="font-size: 35px; margin-top: 40px">No products available.</p>
+                    {% endfor %}
+                    </div>
+<!--                    -->
+                </div>
+            </div>
+            </div>
+{% endblock %}

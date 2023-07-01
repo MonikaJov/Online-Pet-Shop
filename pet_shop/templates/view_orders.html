@@ -1,0 +1,264 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1">#}
+{##}
+{#    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">#}
+{#    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>#}
+{#    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>#}
+{##}
+{#    <title>Cart</title>#}
+{#    <script src="../static/script.js" type="text/javascript"></script>#}
+{#    <style>#}
+{#        .product-name {#}
+{#            font-size: 18px;#}
+{#            font-weight: bold;#}
+{#            margin-bottom: 10px;#}
+{#        }#}
+{##}
+{#        .product-price {#}
+{#            font-size: 16px;#}
+{#            color: #007bff;#}
+{#            margin-bottom: 10px;#}
+{#        }#}
+{##}
+{#        .product-quantity {#}
+{#            margin-bottom: 10px;#}
+{#        }#}
+{##}
+{#        .product-actions {#}
+{#            text-align: right;#}
+{#        }#}
+{##}
+{#        .btn-remove {#}
+{#            color: red;#}
+{#            font-weight: bold;#}
+{#            cursor: pointer;#}
+{#        }#}
+{##}
+{##}
+{#        body {#}
+{#            width: 1536px;#}
+{#            background-color: gainsboro;#}
+{#        }#}
+{##}
+{#        a {#}
+{#            text-decoration: none;#}
+{#            color: black;#}
+{#        }#}
+{##}
+{#        .product-card {#}
+{#            background-color: #ffffff;#}
+{#            padding: 20px;#}
+{#            border-radius: 5px;#}
+{#            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);#}
+{#            transition: all 0.3s ease;#}
+{#        }#}
+{##}
+{#        .product-card:hover {#}
+{#            transform: translateY(-5px);#}
+{#            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);#}
+{#        }#}
+{##}
+{#        .product-card img {#}
+{#            width: 100%;#}
+{#            height: auto;#}
+{#        }#}
+{##}
+{#        .product-card h4 {#}
+{#            margin-top: 10px;#}
+{#            font-size: 18px;#}
+{#            font-weight: bold;#}
+{#        }#}
+{##}
+{#        .product-card p {#}
+{#            margin-top: 5px;#}
+{#            font-size: 14px;#}
+{#            color: #777777;#}
+{#        }#}
+{##}
+{#        .quantity-input label {#}
+{#            margin-right: 10px;#}
+{#            font-weight: bold;#}
+{#        }#}
+{##}
+{#        .quantity-input input {#}
+{#            width: 60px;#}
+{#            padding: 5px;#}
+{#        }#}
+{##}
+{#    </style>#}
+{#</head>#}
+{#<body>#}
+{#<!--Navigation bar-->#}
+{#<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: grey;">#}
+{#    <a class="navbar-brand" href="home.html"><img src="photos/logo.jpg" alt="Logo" style="width: 150px; height: auto;"></a>#}
+{##}
+{#    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">#}
+{#        <span class="navbar-toggler-icon"></span>#}
+{#    </button>#}
+{##}
+{#    <div class="collapse navbar-collapse" id="navbarSupportedContent">#}
+{#        <ul class="navbar-nav">#}
+{#            <li class="nav-item ">#}
+{#                <a class="nav-link" href="home.html">Home</a>#}
+{#            </li>#}
+{#            <li class="nav-item dropdown">#}
+{#                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
+{#                    Products#}
+{#                </a>#}
+{#                <div class="dropdown-menu" aria-labelledby="navbarDropdown">#}
+{#                    <a class="dropdown-item" href="#">Cats</a>#}
+{#                    <a class="dropdown-item" href="dogs.html">Dogs</a>#}
+{#                    <a class="dropdown-item" href="#">Fish</a>#}
+{#                    <a class="dropdown-item" href="#">Birds</a>#}
+{#                    <a class="dropdown-item" href="#">Reptiles</a>#}
+{#                    <a class="dropdown-item" href="#">Small Pets</a>#}
+{#                    <a class="dropdown-item" href="#">Farm Animals</a>#}
+{#                </div>#}
+{#            </li>#}
+{#            <li class="nav-item">#}
+{#                <a class="nav-link" href="#">Promotions</a>#}
+{#            </li>#}
+{#            <li class="nav-item">#}
+{#                <a class="nav-link" href="#">About</a>#}
+{#            </li>#}
+{#            <li class="nav-item">#}
+{#                <a class="nav-link" href="#">Contacts</a>#}
+{#            </li>#}
+{#            <li class="nav-item">#}
+{#                <a class="nav-link" href="#">FAQ</a>#}
+{#            </li>#}
+{#            <li class="nav-item">#}
+{#                <a class="nav-link btn btn-danger btn-sm"  href="add-product.html">Add Product</a>#}
+{#            </li>#}
+{#            <li class="nav-item">#}
+{#                <a class="nav-link"  href="add-product.html">View Orders</a>#}
+{#            </li>#}
+{#            <li class="nav-item" style="margin-left: 250px;">#}
+{#                <form class="form-inline my-2 my-lg-0">#}
+{#                    <div class="input-group">#}
+{#                        <input class="form-control" type="search" placeholder="Search" aria-label="Search">#}
+{#                        <div class="input-group-append">#}
+{#                            <button class="btn btn-dark" type="submit">Search</button>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </form>#}
+{#            </li>#}
+{#            <li class="nav-item">#}
+{#                <a class="nav-link" id="login-button">Log In</a>#}
+{#            </li>#}
+{#            <li class="nav-item">#}
+{#                <a class="nav-link" href="#"><img src="photos/cart.jpg" alt="Cart" style="width: 25px; height: auto;"></a>#}
+{#            </li>#}
+{#            <li class="nav-item">#}
+{#                <img id="cart" style="width: 20px;" src="photos/one.jpg" />#}
+{#            </li>#}
+{#        </ul>#}
+{#    </div>#}
+{#</nav>#}
+{#<!--End navigation bar-->#}
+{% extends 'base.html' %}
+{% block content %}
+    {% for order in orders %}
+        {% if not order.processed %}
+        <div class="card">
+            <h5 class="card-header">Order Number:  {{ order.id }}</h5>
+            <div class="card-body">
+                <h5 class="dropdown-toggle" data-toggle="collapse" href="#{{ order.id }}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    User Details:
+                </h5>
+                <div class="collapse" id="{{ order.id }}" >
+                    <div class="card card-body">
+                        <p class="card-text">Order for user: {{ order.user.username }}</p>
+                        <p class="card-text">Name: {{ order.name }}</p>
+                        <p class="card-text">Surname: {{ order.surname }}</p>
+                        <p class="card-text">Phone Number: {{ order.phone_number }}</p>
+                        <p class="card-text">Email: {{ order.email }}</p>
+                        <p class="card-text">Address: {{ order.address }}</p>
+                        <p class="card-text">Postcode/ZIP: {{ order.postcode }}</p>
+                        <p class="card-text">Payment type: {{ order.payment_type }}</p>
+                        <p class="card-text">Remark: {{ order.remark }}</p>
+                        <p class="card-text">Date ordered: {{ order.date }}</p>
+                    </div>
+                </div>
+                <h5 class="dropdown-toggle" data-toggle="collapse" href="#{{ order.id }}products" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    Products Details:
+                </h5>
+                <div class="collapse" id="{{ order.id }}products" >
+                 {% for product in order.cart_products.all %}
+                    <div class="card card-body">
+                        <p class="card-text">Product Id: {{ product.product.id }}</p>
+                        <p class="card-text">Product Name: {{ product.product.name }}</p>
+                        <div style="width: 150px; height: auto;" class="product-card">
+                        <img src="{{ MEDIA_URL }}{{ product.product.photo }}" alt="Product Photo">
+                        </div>
+                        <p class="card-text">Quantity: {{ product.quantity }}</p>
+                        {% if product.product.has_sizes %}
+                        <p class="card-text">Size: {{ product.size }}</p>
+                        {% endif %}
+                        {% if product.product.has_colors %}
+                        <p class="card-text">Color: {{ product.color }}</p>
+                        {% endif %}
+                        <hr/>
+                    </div>
+                {% endfor %}
+                </div>
+
+
+            </div>
+            <div class="card-footer">
+                <form method="post" enctype="multipart/form-data" action="{% url 'view_orders' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="order_id" value="{{ order.id }}">
+                    <button type="submit" class="btn btn-outline-danger btn-sm">Process order</button>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+    {% endfor %}
+{#        <div class="container mt-5">#}
+{#            <header>#}
+{#                <h3>Orders</h3>#}
+{#            </header>#}
+{#            <div class="container mt-5">#}
+{#                <div class="row justify-content-center">#}
+{#                    <div class="col-md-8">#}
+{#                        {% for order in orders %}#}
+{#                        <div id="cart-items">#}
+{#                            <div id="order" class="order-card">#}
+{#                                <div class="row">#}
+{#                                    <div class="col-md-3">#}
+{#                                        <img src="{{ MEDIA_URL }}{{ product.product.photo }}" alt="${item.name}">#}
+{#                                    </div>#}
+{#                                    <div class="col-md-6">#}
+{#                                        <div class="product-name">#}
+{#                                            Oder for user: {{ order.user.username }}#}
+{#                                            {% if product.product.promotion is not None%}#}
+{#                                                <span style="color: red; font-size: 15px;">{{ product.product.promotion }}</span>#}
+{#                                            {% endif %}#}
+{#                                        </div>#}
+{#                                        <div class="product-price">Ordered on date: {{ order.date }}</div>#}
+{#                                        {% if order.remark is not None%}#}
+{#                                        <div class="product-quantity">Remark: {{ order.remark }}</div>#}
+{#                                        {% endif %}#}
+{#                                        <div>#}
+{##}
+{#                                        </div>#}
+{#                                        <div>#}
+{##}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="col-md-3 product-actions">#}
+{#                                        <a href="{% url 'remove_from_cart' product.id %}" class=" btn btn-danger btn-sme">Remove</a>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        {% endfor %}#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{% endblock %}

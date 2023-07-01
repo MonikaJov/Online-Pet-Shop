@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}<br/>
+    {% if text is not None %}
+    <div id="success" class="text-center" style="background-color: lightgreen; width:100%; color: limegreen; font-size: 25px; margin-right: 100px; "><br/>
+       {{ text }}<br/><br/>
+    </div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data" style="margin-right: 570px; margin-left: 570px">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock %}

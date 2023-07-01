@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="content" style="background-image: url('{{ MEDIA_URL }}cute.jpg'); height: 570px;background-size: cover;background-position: center">
+    <div style=" color: white; padding-top: 60px; margin-left: 90px;">
+        <h1>WELLCOME AT OUR<br/><b>ONLINE PET SHOP</b></h1>
+        <p>Whether you're a proud pet owner or looking to bring a new companion into your life,
+            <br/>we're here to help. Our mission is to provide exceptional care, quality products,
+            <br/> and a memorable experience for both you and your beloved pets.</p>
+        <button class="btn btn-primary">SHOP NOW</button>
+    </div>
+</div>
+
+<div id="content-container2" style="margin: 20px;">
+{##}
+    <div class="row justify-content-between">
+    {% for categorie in categories %}
+        <div class="col text-center">
+            <a class="dropdown-item" href="{% url 'category_view' category=categorie.name %}">
+                <img src="{{ MEDIA_URL }}{{ categorie.photo }}" alt="Image" class="img-fluid">
+                <h4 >{{ categorie.name }}</h4>
+            </a>
+            {% if user.is_authenticated and user.username == 'admin'%}
+            <a href="{% url 'remove_category' category_id=categorie.id %}" style="color: -webkit-link"><small>︎Remove category</small></a>
+            {% endif %}
+        </div>
+    {% endfor %}
+    </div>
+{##}
+<br/><br/><hr/>
+</div>
+{% endblock %}

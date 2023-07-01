@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{#<div class="content" style="background-image: url('{{ MEDIA_URL }}dog_cover.jpg'); height: 470px;background-size: cover;background-position: center">#}
+{#    <div style=" color: white; padding-top: 60px; margin-left: 90px;">#}
+{#        <h1 class="display-4">DOG SHOP</h1>#}
+{#        <p>Welcome to our online dog shop, where you'll find a#}
+{#            <br/>tail-wagging collection of high-quality products!</p>#}
+{#    </div>#}
+{#</div>#}
+{#        <h4 style="margin-left: 250px; margin-right: 250px; margin-top: 20px" >Select Categories</h4>#}
+{#        <div class="rounded" id="content-container2" style="padding: 25px; margin-left: 250px; margin-right: 250px; margin-top: 20px;">#}
+{#            <div class="row justify-content-between">#}
+{#                <div class="col" id="food" onclick="Click('food')">#}
+{#                    <a href="#">#}
+{#                        <img src="{{ MEDIA_URL }}food.jpg" alt="Image 1" class="img-fluid">#}
+{#                        <h4 class="text-center">Food</h4>#}
+{#                    </a>#}
+{#                </div>#}
+{#                <div class="col" id="flea&worming" onclick="Click('flea&worming')">#}
+{#                    <a href="#">#}
+{#                        <img src="{{ MEDIA_URL }}flea&worming.jpg" alt="Image 2" class="img-fluid" >#}
+{#                        <h4 class="text-center">Flea and Worming</h4>#}
+{#                    </a>#}
+{#                </div>#}
+{#                <div class="col" id="toy" onclick="Click('toy')">#}
+{#                    <a href="#">#}
+{#                        <img src="{{ MEDIA_URL }}toy.jpg" alt="Image 3" class="img-fluid" >#}
+{#                        <h4 class="text-center">Toys</h4>#}
+{#                    </a>#}
+{#                </div>#}
+{#                <div class="col" id="grooming" onclick="Click('grooming')">#}
+{#                    <a href="#">#}
+{#                        <img src="{{ MEDIA_URL }}grooming.jpg" alt="Image 4" class="img-fluid" >#}
+{#                        <h4 class="text-center">Grooming</h4>#}
+{#                    </a>#}
+{#                </div>#}
+{#                <div class="col" id="lead" onclick="Click('lead')">#}
+{#                    <a href="#">#}
+{#                        <img src="{{ MEDIA_URL }}collar.jpg" alt="Image 5" class="img-fluid" >#}
+{#                        <h4 class="text-center">Collars and Leads</h4>#}
+{#                    </a>#}
+{#                </div>#}
+{#                <div class="col" id="bed" onclick="Click('bed')">#}
+{#                    <a href="#">#}
+{#                        <img src="{{ MEDIA_URL }}bed.jpg" alt="Image 6" class="img-fluid" >#}
+{#                        <h4 class="text-center">Beds</h4>#}
+{#                    </a>#}
+{#                </div>#}
+{#                <div class="col" id="clothes" onclick="Click('clothes')">#}
+{#                    <a href="#">#}
+{#                        <img src="{{ MEDIA_URL }}clothes.jpg" alt="Image 7" class="img-fluid" >#}
+{#                        <h4 class="text-center">Clothes</h4>#}
+{#                    </a>#}
+{#                </div>#}
+{##}
+{#            </div>#}
+{#            <div class="row justify-content-between">#}
+{#                <div class="col" id="puppy" onclick="Click('puppy')">#}
+{#                    <a href="#">#}
+{#                        <img src="{{ MEDIA_URL }}puppy.jpg" alt="Image 1" class="img-fluid" >#}
+{#                        <h4 class="text-center">Puppy</h4>#}
+{#                    </a>#}
+{#                </div>#}
+{#                <div class="col" id="adult" onclick="Click('adult')">#}
+{#                    <a href="#">#}
+{#                        <img src="{{ MEDIA_URL }}adult.jpg" alt="Image 2" class="img-fluid" >#}
+{#                        <h4 class="text-center">Adult</h4>#}
+{#                    </a>#}
+{#                </div>#}
+{#                <div class="col" id="senior" onclick="Click('senior')">#}
+{#                    <a href="#">#}
+{#                        <img src="{{ MEDIA_URL }}senior.jpg" alt="Image 3" class="img-fluid" >#}
+{#                        <h4 class="text-center">Senior</h4>#}
+{#                    </a>#}
+{#                </div>#}
+{#                <div class="col"></div>#}
+{#                <div class="col" id="small" onclick="Click('small')">#}
+{#                    <a href="#">#}
+{#                        <img src="{{ MEDIA_URL }}small.jpg" alt="Image 5" class="img-fluid" >#}
+{#                        <h4 class="text-center">Small</h4>#}
+{#                    </a>#}
+{#                </div>#}
+{#                <div class="col" id="medium" onclick="Click('medium')">#}
+{#                    <a href="#">#}
+{#                        <img src="{{ MEDIA_URL }}medium.jpg" alt="Image 6" class="img-fluid" >#}
+{#                        <h4 class="text-center">Medium</h4>#}
+{#                    </a>#}
+{#                </div>#}
+{#                <div class="col" id="large" onclick="Click('large')">#}
+{#                    <a href="#">#}
+{#                        <img src="{{ MEDIA_URL }}big.jpg" alt="Image 7" class="img-fluid" >#}
+{#                        <h4 class="text-center">Large</h4>#}
+{#                    </a>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+
+            <div class="row justify-content-between" style="margin-left: 150px; margin-right: 150px; margin-top: 40px">
+
+            <div id="filter-container" class="col-md-3">
+                <br/><br/><br/>
+                <form method="post" action="{% url 'search_results' %}" enctype="multipart/form-data" style=" margin-left: 30px;">
+                    {% csrf_token %}
+                    <div >
+                        {{ form.price.label_tag }}
+                        <div class="input-group">
+                            <span class="input-group-text">$1</span>
+                            {{ form.price }}
+                            <span class="input-group-text">$500</span>
+                        </div>
+                    </div>
+                    <div class="mb-5">
+                        {{ form.brand.label_tag }}
+                        <div>
+                            {% for radio in form.brand %}
+                            {{ radio }}<br/>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Apply Filters</button>
+                </form>
+            </div>
+            <div class="col-md-9">
+                <!-- Product browsing -->
+                <div id="product-browsing-container">
+<!--                    -->
+                    <div class="row justify-content-center" style="display: flex;">
+                    {% for product in products %}
+                        <div class="col-4 my-auto text-center" style="flex: 1;">
+                            <div class="card {{ product.keywords }}" style="width: 18rem;">
+                                {% if product.promotion is None%}
+                                    {% if user.is_authenticated %}
+                                    <small type="button" class="btn btn-link btn-sm">Add promotion</small>
+                                    {% endif %}
+                                {% else %}
+                                <h6 style="color: red"><b>{{ product.promotion }}</b></h6>
+                                {% endif %}
+                                <img class="card-img-top" src="{{ MEDIA_URL }}{{ product.photo }}" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ product.name }}</h5>
+                                    <p>${{ product.price }}</p>
+                                    <a href="{% url 'view_product' product.id %}" type="button" class="btn btn-info">View</a>
+                                    <a class="btn btn-success btn-add-to-cart"  href="{% url 'add_to_cart' product.id %}">Add to Cart</a>
+                                </div>
+                                {% if user.is_authenticated %}
+                                <div class="card-footer">
+                                    <a class="btn btn-danger btn-sm" href="{% url 'delete' product.id %}">Delete</a>
+                                    <a class="btn btn-link btn-sm" href="{% url 'edit' product.id %}">Edit post</a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% empty %}
+                       <p style="font-size: 35px; margin-top: 40px">No products available.</p>
+                    {% endfor %}
+                    </div>
+<!--                    -->
+                </div>
+            </div>
+            </div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+        <br/><br/>
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <div class="product-card">
+                        <img src="{{ MEDIA_URL }}{{ product.photo }}" alt="Product Photo">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h4>{{ product.name }}</h4>
+                    <p >{{ product.desc }}</p>
+                    <p style="font-size: 25px;">${{ product.price }}</p>
+{#                #}
+                    <form method="post" action="{% url 'add_to_cart' product.id %}">
+                        {% csrf_token %}
+                        <div class="quantity-input">
+                            <label for="quantity">Quantity:</label>
+                            <input type="number" id="quantity" min="1" value="1" name="quantity">
+                        </div>
+                        {% if product.has_colors %}
+                            <label for="color">Color:
+                                <input type="text" id="color" name="color">
+                            </label>
+                            {% endif %}
+                            {% if product.has_sizes %}
+                            <label for="size">Size:
+                                <select name="size" id="size">
+                                    <option value="S">S</option>
+                                    <option value="M">M</option>
+                                    <option value="L">L</option>
+                                </select>
+                            </label>
+                        {% endif %}
+                        <br/><button type="submit" class="btn btn-primary">Add to Cart</button>
+                    </form>
+{#                #}
+                    <br/>
+               </div>
+            </div>
+        </div>
+    <br/><br/><br/>
+{% endblock %}

@@ -1,0 +1,60 @@
+
+{% extends 'base.html' %}
+{% block content %}
+        <div class="container mt-5">
+            <header>
+                <h3>Shopping Cart</h3>
+            </header>
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+
+                    <div class="col-md-8">
+                        {% for product in products %}
+                        <div id="cart-items">
+                            <div id="product" class="product-card">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <img src="{{ MEDIA_URL }}{{ product.product.photo }}" alt="${item.name}">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="product-name">
+                                            {{ product.product.name }}
+                                            {% if product.product.promotion is not None%}
+                                                <span style="color: red; font-size: 15px;">{{ product.product.promotion }}</span>
+                                            {% endif %}
+                                        </div>
+                                        <div class="product-price">${{ product.product.price }}</div>
+                                        <div class="product-quantity">{{ product.quantity }}</div>
+                                        <div>
+                                            {% if product.product.has_colors %}
+                                                {{ product.color }}
+                                            {% endif %}
+                                        </div>
+                                        <div>
+                                            {% if product.product.has_sizes %}
+                                                {{ product.size }}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 product-actions">
+                                        <a href="{% url 'remove_from_cart' product.id %}" class=" btn btn-danger btn-sme">Remove</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-4" style="background-color: white; height: 200px;">
+                        <div id="cart-total" class="text-center mt-3">
+                            <h5 style="margin-top: 50px" >Total: ${{ total }}</h5>
+                        </div>
+                        <div class="text-center mt-4">
+                            <a href="{% url 'home' %}" class="btn btn-primary">Continue Shopping</a>
+                            <a href="{% url 'checkout' %}" class="btn btn-success">Checkout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
