@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('checkout/', views.checkout, name='checkout'),
     path('home/', views.home, name='home'),
+    path('', views.home, name='home'),
     path('cart/', views.cart, name='cart'),
     path('promotions/', views.promotions, name='promotions'),
     path('register/', views.register, name='register'),
