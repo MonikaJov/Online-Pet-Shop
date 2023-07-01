@@ -82,31 +82,6 @@ def category_view(request, category):
     return render(request, f"{category.lower()}.html", context)
 
 
-
-# def cats(request):
-#     products = Product.objects.filter(category__name="Cats")
-#     form = FilterForm()
-#     if request.method == "POST":
-#         form_data = FilterForm(data=request.POST, files=request.FILES)
-#         if form_data.is_valid():
-#             price_form = form_data.cleaned_data['price']
-#             brand_name = form_data.cleaned_data['brand']
-#             if not brand_name:
-#                 print("Brand is empty")
-#                 products = products.filter(Q(price__lte=price_form) | Q(price=None))
-#             else:
-#                 brand = Brand.objects.get(name=brand_name)
-#                 products = products.filter(Q(price__lte=price_form) | Q(price=None), Q(brand=brand) | Q(brand=None))
-#     cart_products = CartProduct.objects.filter(user=get_user(request))
-#     context = {
-#         'cart_products': cart_products.count(),
-#         'products': products,
-#         'MEDIA_URL': settings.MEDIA_URL,
-#         'form': form,
-#     }
-#     return render(request, 'cats.html', context)
-
-
 def edit(request, product_id):
     form = None
     product = get_object_or_404(Product, id=product_id)
@@ -237,17 +212,26 @@ def cart(request):
     products = user_cart.products.all()
     today = timezone.now().date()
     for product in products:
-        if product.promotion:
-            if product.promotion.calculate_end_date().date() == today:
+        try:
+            if product.promotion and product.promotion.calculate_end_date().date() == today:
                 product.promotion.delete()
+        except AttributeError:
+            # Handle the case where the product doesn't have a promotion attribute
+            pass
+
     cart_products = CartProduct.objects.filter(user=get_user(request))
     total = 0.0
     for cart_product in cart_products:
-        if cart_product.product.promotion is not None:
-            promotion = cart_product.product.price * (cart_product.product.promotion.amount / 100)
-            cart_product.product.price = cart_product.product.price - promotion
-        cart_product.product.price = cart_product.product.price * int(cart_product.quantity)
-        total = total + cart_product.product.price
+        try:
+            if cart_product.product.promotion is not None:
+                promotion = cart_product.product.price * (cart_product.product.promotion.amount / 100)
+                cart_product.product.price = cart_product.product.price - promotion
+            cart_product.product.price = cart_product.product.price * int(cart_product.quantity)
+            total += cart_product.product.price
+        except AttributeError:
+            # Handle the case where the product doesn't have a promotion attribute
+            pass
+
     total = format(total, '.2f')
     context = {
         'products': products,
@@ -256,6 +240,7 @@ def cart(request):
         'total': total,
     }
     return render(request, 'cart.html', context)
+
 
 
 def remove_from_cart(request, product_id):
@@ -431,6 +416,7 @@ def remove_category(request, category_id):
     category.delete()
     return redirect('home')
 
+
 def add_promotion(request, product_id):
 
     product = get_object_or_404(Product, id=product_id)
@@ -498,3 +484,29 @@ def register(request):
             return redirect('login_form')
 
     return render(request, 'register.html', context)
+
+
+def promotions(request):
+    cart_products = CartProduct.objects.filter(user=get_user(request))
+    products = Product.objects.filter(promotion__isnull=False)
+    form = FilterForm()
+    if request.method == "POST":
+        form_data = FilterForm(data=request.POST, files=request.FILES)
+        if form_data.is_valid():
+            price_form = form_data.cleaned_data['price']
+            brand_name = form_data.cleaned_data['brand']
+            if not brand_name:
+                print("Brand is empty")
+                products = products.filter(Q(price__lte=price_form) | Q(price=None))
+            else:
+                brand = Brand.objects.get(name=brand_name)
+                products = products.filter(Q(price__lte=price_form) | Q(price=None), Q(brand=brand) | Q(brand=None))
+    promotion = Promotion.objects.all()
+    context = {
+        'promotions': promotion,
+        'cart_products': cart_products.count(),
+        'products': products,
+        'MEDIA_URL': settings.MEDIA_URL,
+        'form': form,
+    }
+    return render(request, 'view_products.html', context)
