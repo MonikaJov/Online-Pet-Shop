@@ -17,3 +17,7 @@ To set up the project, follow these steps:
 3.To run the project type the following command in terminal: python manage.py runserver
 
 4.Open your web browser and visit http://localhost:8000 to access the online pet shop.
+
+*To be able to add, edit or delete products, categories and promotions you need to be logged in as admin - username:admin password:admin
+
+
