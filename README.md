@@ -20,4 +20,7 @@ To set up the project, follow these steps:
 
 *To be able to add, edit or delete products, categories and promotions you need to be logged in as admin - username:admin password:admin
 
+Technologies used: Python, HTML, CSS, Bootstrap, JavaScript, Django. 
+
+Hosted version of the prototype: monikajovevska23.pythonanywhere.com
 
